@@ -1,0 +1,51 @@
+define                  = -DPOPS -DPOPC
+
+integrator              = md
+dt                      = 0.002
+nsteps                  = 10000000
+nstxout-compressed      = 1000
+nstxout                 = 0
+nstvout                 = 0
+nstfout                 = 10000
+nstcalcenergy           = 100
+nstenergy               = 1000
+nstlog                  = 1000
+;
+cutoff-scheme           = Verlet
+nstlist                 = 20
+rlist                   = 1.2
+vdwtype                 = Cut-off
+vdw-modifier            = Force-switch
+rvdw_switch             = 1.0
+rvdw                    = 1.2
+coulombtype             = PME
+rcoulomb                = 1.2
+;
+tcoupl                  = v-rescale
+tc_grps                 = SOL non-Water
+tau_t                   = 1.0 1.0 
+ref_t                   = 303.15 303.15
+
+;
+constraints             = h-bonds
+constraint_algorithm    = LINCS
+continuation            = yes
+;
+
+freezegrps = freeze     
+freezedim = Y N N
+
+pull                    = yes   
+pull_ncoords            = 1
+pull_ngroups            = 2
+pull_group1_name        = A1A5
+pull_group2_name        = refer
+pull_coord1_type        = constant-force
+pull_coord1_geometry    = direction-periodic
+pull_coord1_dim         = Y N N
+pull_coord1_vec      	 =  -1 0 0 
+pull_coord1_groups      = 2 1
+pull_coord1_start       = yes       
+pull_coord1_k           = 42  ;70pN 1.66pN=1kJ.mol-1.nm-1
+pull_nstfout    = 1
+pull_nstxout    = 1
